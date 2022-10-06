@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{detailData.CommonName}}</h1>
+<div mat-dialog-content>
+  <P>{{detailData.ChiefPosition | titlecase}} : {{detailData.ChiefName}}</P>
+  <P>Адрес : {{detailData.ObjectAddress[0].Address}}</P>
+  <P>Email: {{detailData.Email[0].Email}}</P>
+  <P>Телефон: +7 {{detailData.PublicPhone[0].PublicPhone}}</P>
+  <P>Сайт: {{detailData.WebSite}}</P>
+</div>

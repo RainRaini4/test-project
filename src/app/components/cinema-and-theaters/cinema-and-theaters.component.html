@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-12">
+    <a style="margin: 0 16px" mat-raised-button color="primary" type="button" routerLink="/sliders" routerLinkActive="active">К слайдерам</a>
+  </div>
+  <app-pre-loader [hidden]="!showPreLoader"></app-pre-loader>
+  <div class="row" [hidden]="showPreLoader">
+    <div class="col-12 col-lg-6">
+      <P class="h4" style="margin: 0 16px">Кинотеатры</P>
+      <mat-selection-list [hidden]="cinemas.length === 0" [multiple]="false" style="max-height: 80vh; overflow: auto">
+        <mat-list-item *ngFor="let cinema of cinemas" (click)="openDetailModal(cinema.Cells)">
+          {{cinema.Cells.CommonName}}
+        </mat-list-item>
+      </mat-selection-list>
+      <P [hidden]="cinemas.length > 0" style="margin: 0 16px">Нет данных</P>
+    </div>
+
+    <div class="col-12 col-lg-6">
+      <P class="h4" style="margin: 0 16px">Театры</P>
+      <mat-selection-list [hidden]="theaters.length === 0" [multiple]="false" style="max-height: 80vh; overflow: auto">
+        <mat-list-item *ngFor="let theater of theaters" (click)="openDetailModal(theater.Cells)">
+          {{theater.Cells.CommonName}}
+        </mat-list-item>
+      </mat-selection-list>
+      <P [hidden]="theaters.length > 0" style="margin: 0 16px">Нет данных</P>
+    </div>
+    <div class="col-12">
+      <button [disabled]="disableBtns" *ngIf="currPage > 1" style="margin-left: 16px" mat-raised-button color="primary" type="button" (click)="loadPrev()">Назад</button>
+      <button [disabled]="disableBtns" style="margin-left: 16px" mat-raised-button color="primary" type="button" (click)="loadMore()">Загрузить еще</button>
+    </div>
+    <div class="col-12">
+      <P style="margin: 6px 0 0 16px">Текущая страница : {{currPage}}</P>
+    </div>
+  </div>
+</div>

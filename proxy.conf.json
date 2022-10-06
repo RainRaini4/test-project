@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://apidata.mos.ru/v1/datasets",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/api" : ""}
+  }
+}

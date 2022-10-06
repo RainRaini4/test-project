@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/scss/bootstrap';
+.row {
+  margin: 10px 0;
+  padding: 0;
+}
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 70vh;
+}
+.mat-list-item {
+  cursor: pointer;
+}
+.mat-list-item:hover {
+  background: rgb(224,224,224);
+}
