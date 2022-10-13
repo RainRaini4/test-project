@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {catchError, Observable, retry, timeout} from "rxjs";
-import {HttpClient, HttpParams} from "@angular/common/http";
 import {IResponse} from "../models/iresponse";
+import {Observable, retry, timeout} from "rxjs";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
-const API_KEY : string = '226ba1f192226db3043530de69b21d28'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class HttpService {
 
     params = params.append('$top', 20);
     params = params.append('$skip', 20 * (page - 1));
-    params = params.append('api_key', API_KEY);
+    params = params.append('api_key', environment.apiKey);
     return this.http.get<IResponse[]>('/api/495/rows', {params : params}).pipe(
       timeout(3000),
       retry(5)
@@ -29,7 +29,7 @@ export class HttpService {
 
     params = params.append('$top', 20);
     params = params.append('$skip', 20 * (page - 1));
-    params = params.append('api_key', API_KEY);
+    params = params.append('api_key', environment.apiKey);
     return this.http.get<IResponse[]>('/api/531/rows', {params : params}).pipe(
       timeout(3000),
       retry(5)
