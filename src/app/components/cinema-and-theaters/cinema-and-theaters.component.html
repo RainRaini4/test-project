@@ -1,28 +1,30 @@
-<div class="row">
-  <div class="col-12">
-    <a style="margin: 0 16px" mat-raised-button color="primary" type="button" routerLink="/sliders" routerLinkActive="active">К слайдерам</a>
+<div class="main-container">
+  <div>
+    <a mat-raised-button color="primary" type="button" routerLink="/sliders" routerLinkActive="active">К слайдерам</a>
   </div>
   <app-pre-loader [hidden]="!showPreLoader"></app-pre-loader>
-  <div class="row" [hidden]="showPreLoader" >
-    <div class="col-12 col-lg-6">
-      <P class="h4" style="margin: 0 16px">Кинотеатры</P>
-      <mat-selection-list [hidden]="cinemas$.value.length === 0" [multiple]="false" style="max-height: 80vh; overflow: auto">
-        <mat-list-item *ngFor="let cinema of cinemas$ | async" (click)="openDetailModal(cinema.Cells)">
-          {{cinema.Cells.CommonName}}
-        </mat-list-item>
-      </mat-selection-list>
-      <P [hidden]="cinemas$.value.length > 0" style="margin: 0 16px">Нет данных</P>
-    </div>
+  <div [hidden]="showPreLoader">
+    <div class="lists-container">
+      <div>
+        <P class="mat-h1">Кинотеатры</P>
+        <mat-selection-list class="full-height-list" [hidden]="cinemas$.value.length === 0" [multiple]="false">
+          <mat-list-item *ngFor="let cinema of cinemas$ | async" (click)="openDetailModal(cinema.Cells)">
+            {{cinema.Cells.CommonName}}
+          </mat-list-item>
+        </mat-selection-list>
+        <P [hidden]="cinemas$.value.length > 0">Нет данных</P>
+      </div>
 
-    <div class="col-12 col-lg-6">
-      <P class="h4" style="margin: 0 16px">Театры</P>
-      <mat-selection-list [hidden]="theaters$.value.length === 0" [multiple]="false" style="max-height: 80vh; overflow: auto">
-        <mat-list-item *ngFor="let theater of theaters$ | async" (click)="openDetailModal(theater.Cells)">
-          {{theater.Cells.CommonName}}
-        </mat-list-item>
-      </mat-selection-list>
-     <P [hidden]="theaters$.value.length > 0" style="margin: 0 16px">Нет данных</P>
+      <div>
+        <P class="mat-h1">Театры</P>
+        <mat-selection-list class="full-height-list" [hidden]="theaters$.value.length === 0" [multiple]="false">
+          <mat-list-item *ngFor="let theater of theaters$ | async" (click)="openDetailModal(theater.Cells)">
+            {{theater.Cells.CommonName}}
+          </mat-list-item>
+        </mat-selection-list>
+       <P [hidden]="theaters$.value.length > 0">Нет данных</P>
+      </div>
+      <app-paginator [(pageNumber)]="currPage" [disableButtons]="disableBtns" (pageChanged)="loadNewPage()"></app-paginator>
     </div>
-    <app-paginator [(pageNumber)]="currPage" [disableButtons]="disableBtns" (pageChanged)="loadNewPage()"></app-paginator>
   </div>
 </div>
