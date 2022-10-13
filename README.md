@@ -1,6 +1,6 @@
 # TestProject
 
-![unknown_2022 10 06-20 03_1](https://user-images.githubusercontent.com/83559408/194375324-f9236e42-41cd-4977-867c-23b8ee8d99d6.gif)
+https://user-images.githubusercontent.com/83559408/195665481-2d9b61b5-cff9-449b-99ad-14819348ff0a.mp4
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.2.
 
@@ -27,3 +27,4 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
