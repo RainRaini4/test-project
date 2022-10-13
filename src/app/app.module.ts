@@ -17,6 +17,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { DetailModalComponent } from './core/modals/detail-modal/detail-modal.component';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { PaginatorComponent } from './core/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
     SlidersComponent,
     CinemaAndTheatersComponent,
     PreLoaderComponent,
-    DetailModalComponent
+    DetailModalComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

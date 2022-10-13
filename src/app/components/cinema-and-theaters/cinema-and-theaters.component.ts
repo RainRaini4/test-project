@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpService} from "../../services/http.service";
-import {forkJoin, Observable} from "rxjs";
+import {BehaviorSubject, forkJoin, Observable, Subject, Subscription} from "rxjs";
 import {IResponse} from "../../models/iresponse";
 import {MatDialog} from "@angular/material/dialog";
 import {DetailModalComponent} from "../../core/modals/detail-modal/detail-modal.component";
@@ -9,50 +9,42 @@ import {ICell} from "../../models/icell";
 @Component({
   selector: 'app-cinema-and-theaters',
   templateUrl: './cinema-and-theaters.component.html',
-  styleUrls: ['./cinema-and-theaters.component.scss']
+  styleUrls: ['./cinema-and-theaters.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CinemaAndTheatersComponent {
+export class CinemaAndTheatersComponent implements OnDestroy{
 
-  public cinemas: IResponse[] = []
-  public theaters: IResponse[] = []
-  public showPreLoader = true
+  public cinemas$: BehaviorSubject<IResponse[]> = new BehaviorSubject<IResponse[]>([])
+  public theaters$: BehaviorSubject<IResponse[]> = new BehaviorSubject<IResponse[]>([])
+  public showPreLoader : boolean = true
   public currPage : number = 1
-  public disableBtns = false
+  public disableBtns : boolean = false
+
+
+  private getData$: Subscription
 
   constructor(
     private httpService : HttpService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdref: ChangeDetectorRef,
   ) {
     this.showPreLoader = true
-    this.getData().subscribe({
+    this.getData$ = this.getData(1).subscribe({
       next: (vals) => {
-        console.log(vals)
-        this.cinemas = vals[0]
-        this.theaters = vals[1]
+        this.cinemas$.next(vals[0])
+        this.theaters$.next(vals[1])
         this.showPreLoader = false
+        this.cdref.detectChanges()
       }
     });
   }
 
-  public loadMore() : void {
+  public loadNewPage() : void {
     this.disableBtns = true
-    ++this.currPage
-    this.getData().subscribe({
+    this.getData$ = this.getData(this.currPage).subscribe({
       next: (vals) => {
-        this.cinemas = vals[0]
-        this.theaters = vals[1]
-        this.disableBtns = false
-      }
-    });
-  }
-
-  public loadPrev() : void {
-    this.disableBtns = true
-    --this.currPage
-    this.getData().subscribe({
-      next: (vals) => {
-        this.cinemas = vals[0]
-        this.theaters = vals[1]
+        this.cinemas$.next(vals[0])
+        this.theaters$.next(vals[1])
         this.disableBtns = false
       }
     });
@@ -66,15 +58,21 @@ export class CinemaAndTheatersComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.getData$.unsubscribe()
+    this.cinemas$.unsubscribe()
+    this.theaters$.unsubscribe()
+  }
 
 
 
 
 
-  private getData() : Observable<any> {
+
+  private getData(currPage : number) : Observable<[IResponse[], IResponse[]]> {
     return forkJoin([
-        this.httpService.getCinema(this.currPage),
-        this.httpService.getTheaters(this.currPage)
+        this.httpService.getCinema(currPage),
+        this.httpService.getTheaters(currPage)
       ]
     )
   }
