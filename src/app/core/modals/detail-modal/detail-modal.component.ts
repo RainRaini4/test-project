@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject, Input, OnInit} from '@angula
 import {IResponse} from "../../../models/iresponse";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {ICell} from "../../../models/icell";
+import {TitleCasePipe, UpperCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-detail-modal',
@@ -21,7 +22,7 @@ export class DetailModalComponent {
   }
 
   get chiefPosition() : string {
-    return this.detailData.ChiefPosition ? this.detailData.ChiefPosition : '-'
+    return this.detailData.ChiefPosition ? new TitleCasePipe().transform(this.detailData.ChiefPosition) : 'Должность'
   }
 
   get chiefName() : string {
@@ -29,15 +30,18 @@ export class DetailModalComponent {
   }
 
   get address() : string {
-    return this.detailData.ObjectAddress && this.detailData.ObjectAddress[0].Address ? this.detailData.ObjectAddress[0].Address: '-'
+    return this.detailData.ObjectAddress && this.detailData.ObjectAddress.length > 0 && this.detailData.ObjectAddress[0].Address ?
+      this.detailData.ObjectAddress[0].Address: '-'
   }
 
   get email() : string {
-    return this.detailData.Email && this.detailData.Email[0].Email ? this.detailData.Email[0].Email: '-'
+    return this.detailData.Email &&  this.detailData.Email.length > 0 && this.detailData.Email[0].Email ?
+      this.detailData.Email[0].Email: '-'
   }
 
   get publicPhone() : string {
-    return this.detailData.PublicPhone && this.detailData.PublicPhone[0].PublicPhone ? '+7 ' + this.detailData.PublicPhone[0].PublicPhone : '-'
+    return this.detailData.PublicPhone && this.detailData.PublicPhone.length > 0 && this.detailData.PublicPhone[0].PublicPhone ?
+      '+7 ' + this.detailData.PublicPhone[0].PublicPhone : '-'
   }
 
   get webSite() : string {

@@ -1,4 +1,4 @@
-<button class="padding-btn" [disabled]="disableBtns" *ngIf="currPage > 1" mat-raised-button color="primary" type="button" (click)="changePage(currPage - 1)">Назад</button>
-<button class="padding-btn" [disabled]="disableBtns" mat-raised-button color="primary" type="button" (click)="changePage(currPage + 1)">Загрузить еще</button>
-<P>Текущая страница : {{currPage}}</P>
+<button class="padding-btn" [disabled]="disableButtons" *ngIf="pageNumber > 1" mat-raised-button color="primary" type="button" (click)="changePage(pageNumber - 1)">Назад</button>
+<button class="padding-btn" [disabled]="disableButtons" mat-raised-button color="primary" type="button" (click)="changePage(pageNumber + 1)">Загрузить еще</button>
+<P>Текущая страница : {{pageNumber}}</P>
 

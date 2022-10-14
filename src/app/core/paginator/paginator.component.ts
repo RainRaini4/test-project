@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-paginator',
@@ -9,27 +8,17 @@ import {BehaviorSubject} from "rxjs";
 })
 export class PaginatorComponent {
 
-  @Input() set pageNumber(pageNumber: number) {
-    this.currPage = pageNumber
-  }
-  @Output() pageNumberChange: EventEmitter<number> = new EventEmitter<number>();
+  @Input() pageNumber : number = 1
+  @Input() disableButtons : boolean = false
 
-  @Input() set disableButtons(disable: boolean) {
-    this.disableBtns = disable
-  }
-
-  @Output() pageChanged: EventEmitter<string> = new EventEmitter<string>();
-
-  public currPage : number = 1
-  public disableBtns : boolean = false
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(
   ) {
   }
 
   public changePage(newPageNumber : number) : void {
-    this.pageNumberChange.emit(newPageNumber)
-    this.pageChanged.emit('pageChanged')
+    this.pageChanged.emit(newPageNumber)
   }
 
 }

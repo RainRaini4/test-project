@@ -12,40 +12,41 @@ import {ICell} from "../../models/icell";
   styleUrls: ['./cinema-and-theaters.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CinemaAndTheatersComponent implements OnDestroy{
+export class CinemaAndTheatersComponent implements OnInit, OnDestroy{
 
   public cinemas$: BehaviorSubject<IResponse[]> = new BehaviorSubject<IResponse[]>([])
   public theaters$: BehaviorSubject<IResponse[]> = new BehaviorSubject<IResponse[]>([])
-  public showPreLoader : boolean = true
+  public showPreLoader$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
+  public disableBtns$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public currPage : number = 1
-  public disableBtns : boolean = false
 
 
-  private getData$: Subscription
+  private getData$: Subscription = new Subscription()
 
   constructor(
     private httpService : HttpService,
     private dialog: MatDialog,
-    private cdref: ChangeDetectorRef,
   ) {
-    this.showPreLoader = true
+  }
+
+  ngOnInit(): void {
     this.getData$ = this.getData(1).subscribe({
       next: (vals) => {
         this.cinemas$.next(vals[0])
         this.theaters$.next(vals[1])
-        this.showPreLoader = false
-        this.cdref.detectChanges()
+        this.showPreLoader$.next(false)
       }
     });
   }
 
-  public loadNewPage() : void {
-    this.disableBtns = true
-    this.getData$ = this.getData(this.currPage).subscribe({
+  public loadNewPage(newPageNumber : number) : void {
+    this.disableBtns$.next(true)
+    this.getData$ = this.getData(newPageNumber).subscribe({
       next: (vals) => {
+        this.currPage = newPageNumber
         this.cinemas$.next(vals[0])
         this.theaters$.next(vals[1])
-        this.disableBtns = false
+        this.disableBtns$.next(false)
       }
     });
   }
@@ -60,12 +61,7 @@ export class CinemaAndTheatersComponent implements OnDestroy{
 
   ngOnDestroy(): void {
     this.getData$.unsubscribe()
-    this.cinemas$.unsubscribe()
-    this.theaters$.unsubscribe()
   }
-
-
-
 
 
 

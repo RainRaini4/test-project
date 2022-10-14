@@ -2,8 +2,8 @@
   <div>
     <a mat-raised-button color="primary" type="button" routerLink="/sliders" routerLinkActive="active">К слайдерам</a>
   </div>
-  <app-pre-loader [hidden]="!showPreLoader"></app-pre-loader>
-  <div [hidden]="showPreLoader">
+  <app-pre-loader [hidden]="!showPreLoader$.value"></app-pre-loader>
+  <div [hidden]="showPreLoader$.value">
     <div class="lists-container">
       <div>
         <P class="mat-h1">Кинотеатры</P>
@@ -24,7 +24,7 @@
         </mat-selection-list>
        <P [hidden]="theaters$.value.length > 0">Нет данных</P>
       </div>
-      <app-paginator [(pageNumber)]="currPage" [disableButtons]="disableBtns" (pageChanged)="loadNewPage()"></app-paginator>
+      <app-paginator [pageNumber]="currPage" [disableButtons]="disableBtns$.value" (pageChanged)="loadNewPage($event)"></app-paginator>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {MatSliderChange} from "@angular/material/slider";
 import {Equalizer} from "./equalizer";
 
@@ -26,14 +26,13 @@ export class SlidersComponent {
   public min : number = -100
   public max : number = 100
 
-  private equalizer: Equalizer;
+  private equalizer: Equalizer = new Equalizer(
+    this.min,
+    this.max,
+    [ this.sliders.val1, this.sliders.val2, this.sliders.val3, this.sliders.val4 ]
+  );
 
   constructor() {
-    this.equalizer = new Equalizer(
-      this.min,
-      this.max,
-      [ this.sliders.val1, this.sliders.val2, this.sliders.val3, this.sliders.val4 ]
-    );
   }
 
   public getSum () : number {return this.sliders.val1 + this.sliders.val2 + this.sliders.val3 + this.sliders.val4}
